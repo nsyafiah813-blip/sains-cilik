@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Misi Sains Cilik: Tenggelam atau Timbul?</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', 'Segoe UI', sans-serif;
+    }
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, #bbf2f6 0%, #86e3ce 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 16px;
+    }
+    .app-container {
+      background: #ffffff;
+      width: 100%;
+      max-width: 800px;
+      border-radius: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      border: 6px solid #48cae4;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 540px;
+    }
+    header {
+      background: #0077b6;
+      color: #ffffff;
+      padding: 18px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+      letter-spacing: 0.5px;
+    }
+    header p {
+      margin: 6px 0 0 0;
+      font-size: 14px;
+      opacity: 0.95;
+    }
+    .content-area {
+      flex: 1;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .step-badge {
+      background: #ffb703;
+      color: #023047;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 14px;
+      margin-bottom: 12px;
+      display: inline-block;
+    }
+    .big-icon {
+      font-size: 70px;
+      margin: 12px 0;
+      animation: bounce 2s infinite alternate;
+    }
+    @keyframes bounce {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-10px); }
+    }
+    .btn-group {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    button {
+      background: #06d6a0;
+      color: #073b4c;
+      border: none;
+      padding: 14px 26px;
+      font-size: 17px;
+      font-weight: bold;
+      border-radius: 16px;
+      cursor: pointer;
+      box-shadow: 0 5px 0 #059669;
+      transition: all 0.1s ease;
+    }
+    button:active {
+      transform: translateY(4px);
+      box-shadow: 0 1px 0 #059669;
+    }
+    button.btn-secondary {
+      background: #ffd166;
+      box-shadow: 0 5px 0 #e09f3e;
+    }
+    button.btn-blue {
+      background: #118ab2;
+      color: #ffffff;
+      box-shadow: 0 5px 0 #005f73;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      width: 100%;
+      margin-top: 15px;
+    }
+    .info-box {
+      border: 3px dashed #0096c7;
+      border-radius: 16px;
+      padding: 16px;
+      background: #f0f9ff;
+    }
+    .info-box h3 {
+      margin-top: 0;
+      color: #0077b6;
+    }
+    .feedback-msg {
+      font-size: 19px;
+      margin-top: 15px;
+      font-weight: bold;
+      min-height: 28px;
+    }
+    .footer-bar {
+      background: #f8fafc;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 2px solid #e2e8f0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    <header>
+      <h1>🌊 Misi Sains Cilik: Detektif Air</h1>
+      <p>Bahan Pengajaran Digital Sains Awal (Kanak-Kanak 4–6 Tahun)</p>
+    </header>
+
+    <div class="content-area" id="screen-content">
+      <!-- Kandungan Slaid Interaktif -->
+    </div>
+
+    <div class="footer-bar">
+      <button class="btn-secondary" style="padding: 8px 16px; font-size: 14px;" onclick="prevScreen()">⬅ Undur</button>
+      <button class="btn-blue" style="padding: 8px 16px; font-size: 14px;" onclick="speakCurrentText()">🔊 Dengar Suara</button>
+      <button class="btn-secondary" style="padding: 8px 16px; font-size: 14px;" onclick="nextScreen()">Maju ➡</button>
+    </div>
+  </div>
+
+  <script>
+    let currentStep = 0;
+
+    const screens = [
+      // Slaid 1: Muka Hadapan
+      {
+        badge: "Modul Pembelajaran Digital Sains",
+        title: "Tenggelam atau Timbul?",
+        icon: "🤿 🚢 🪨",
+        body: "Hai kawan-kawan cilik! Hari ini kita akan bersama Cikgu menjadi detektif untuk meneroka sifat objek di dalam air!",
+        audioText: "Hai kawan-kawan cilik! Hari ini kita akan bersama Cikgu menjadi detektif untuk meneroka sifat objek di dalam air! Tekan butang Mula Meneroka!",
+        buttons: [
+          { text: "Mula Meneroka! 🚀", action: () => nextScreen() }
+        ]
+      },
+      // Slaid 2: Definisi Konsep
+      {
+        badge: "Mari Fahami Konsep",
+        title: "Apa Maksud Timbul & Tenggelam?",
+        icon: "💧",
+        body: `
+          <div class="card-grid">
+            <div class="info-box">
+              <h3>🪿 TIMBUL</h3>
+              <p>Objek kekal berada di <strong>atas permukaan air</strong> (terapung).</p>
+              <small>Contoh: Itik getah, daun kering, span</small>
+            </div>
+            <div class="info-box">
+              <h3>🪨 TENGGELAM</h3>
+              <p>Objek jatuh ke bawah hingga ke <strong>dasar air</strong>.</p>
+              <small>Contoh: Batu, duit syiling, kunci besi</small>
+            </div>
+          </div>
+        `,
+        audioText: "Timbul bermaksud objek kekal terapung di atas permukaan air. Tenggelam bermaksud objek jatuh hingga ke dasar air.",
+        buttons: [
+          { text: "Jom Uji Tekaan! 🔍", action: () => nextScreen() }
+        ]
+      },
+      // Slaid 3: Aktiviti Ramalan Interaktif
+      {
+        badge: "Teka & Ramal",
+        title: "Ujian Detektif: Batu Kerikil 🪨",
+        icon: "🪨 ❓ 🥣",
+        body: "Sekiranya Cikgu masukkan seketul batu ke dalam besen air, apakah yang akan berlaku?",
+        audioText: "Sekiranya Cikgu masukkan seketul batu ke dalam besen air, apakah yang akan berlaku? Adakah ia timbul atau tenggelam?",
+        buttons: [
+          { text: "Timbul di Atas Air 🪿", action: () => checkAnswer(false) },
+          { text: "Tenggelam ke Bawah 🪨", action: () => checkAnswer(true) }
+        ]
+      },
+      // Slaid 4: Misi Hands-on di Rumah/Kelas
+      {
+        badge: "Aktiviti Penerokaan Aktif",
+        title: "Cabaran Detektif Sains! 🔎",
+        icon: "🥣 🌿 🪙",
+        body: `
+          <p>Sekarang giliran anda membuat penerokaan bersama guru atau ibu bapa:</p>
+          <ol style="text-align: left; max-width: 480px; margin: auto; line-height: 1.7;">
+            <li>Sediakan satu besen berisi air bersih.</li>
+            <li>Cari <strong>1 daun kering</strong> dan <strong>1 keping duit syiling</strong>.</li>
+            <li>Masukkan ke dalam air dan perhatikan: Objek manakah yang timbul? Objek manakah yang tenggelam?</li>
+          </ol>
+        `,
+        audioText: "Cabaran detektif! Ambil besen air, masukkan daun dan duit syiling. Perhatikan yang mana timbul dan yang mana tenggelam.",
+        buttons: [
+          { text: "Selesai Misi! 🎉", action: () => nextScreen() }
+        ]
+      },
+      // Slaid 5: Penutup
+      {
+        badge: "Syabas!",
+        title: "Tahniah Detektif Cilik Sains!",
+        icon: "🌟 🏆 🌟",
+        body: "Anda telah berjaya meneroka konsep sifat objek di dalam air dengan cemerlang!",
+        audioText: "Tahniah kawan-kawan! Anda telah berjaya menjadi detektif sains yang hebat hari ini.",
+        buttons: [
+          { text: "Mula Semula 🔄", action: () => { currentStep = 0; renderScreen(); } }
+        ]
+      }
+    ];
+
+    function renderScreen() {
+      const data = screens[currentStep];
+      const container = document.getElementById("screen-content");
+
+      let buttonsHTML = data.buttons.map((btn, index) => 
+        `<button class="${index % 2 === 1 ? 'btn-secondary' : ''}" onclick="screens[${currentStep}].buttons[${index}].action()">${btn.text}</button>`
+      ).join(" ");
+
+      container.innerHTML = `
+        <span class="step-badge">${data.badge}</span>
+        <h2 style="margin: 0; color: #023047;">${data.title}</h2>
+        <div class="big-icon">${data.icon}</div>
+        <div style="font-size: 17px; color: #334155; margin-bottom: 10px;">${data.body}</div>
+        <div class="btn-group">${buttonsHTML}</div>
+        <div id="feedback" class="feedback-msg"></div>
+      `;
+    }
+
+    function checkAnswer(isCorrect) {
+      const feedback = document.getElementById("feedback");
+      if (isCorrect) {
+        feedback.innerHTML = "<span style='color: #059669;'>🎉 TAHNIAH, TEPAT SEKALI! Batu berat dan padat, jadi ia tenggelam ke dasar air!</span>";
+        speakText("Tahniah, tepat sekali! Batu berat dan padat, jadi ia tenggelam ke dasar air.");
+        setTimeout(() => {
+          nextScreen();
+        }, 2000);
+      } else {
+        feedback.innerHTML = "<span style='color: #d90429;'>❌ Kurang tepat! Cuba fikirkan, adakah batu ini berat atau ringan? Jom cuba lagi!</span>";
+        speakText("Kurang tepat! Cuba fikirkan, adakah batu ini berat atau ringan? Jom cuba lagi!");
+      }
+    }
+
+    function nextScreen() {
+      if (currentStep < screens.length - 1) {
+        currentStep++;
+        renderScreen();
+      }
+    }
+
+    function prevScreen() {
+      if (currentStep > 0) {
+        currentStep--;
+        renderScreen();
+      }
+    }
+
+    // Fungsi Pembaca Audio (Text-to-Speech)
+    function speakText(text) {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'ms-MY'; // Bahasa Melayu
+        utterance.rate = 0.9;
+        window.speechSynthesis.speak(utterance);
+      }
+    }
+
+    function speakCurrentText() {
+      const text = screens[currentStep].audioText || screens[currentStep].title;
+      speakText(text);
+    }
+
+    // Paparkan skrin pertama semasa mula dibuka
+    renderScreen();
+  </script>
+</body>
+</html>
